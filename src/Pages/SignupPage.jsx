@@ -16,6 +16,14 @@ export default function SignupPage(){
         setError('')
         setLoading(true)
 
+        if(!email.trim() || !password.trim())return setError('Please fill in all fields.')
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if(!emailRegex.test(email))return setError('Please enter a valid email address.')
+        
+        if(password.length<6)return setError('Password must be at least 6 characters long.')
+    
+
         try {
             let user = await createUserWithEmailAndPassword(auth,email,password)
             console.log(user)

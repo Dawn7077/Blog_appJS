@@ -13,7 +13,15 @@ export default function Login(){
     async function handleLogin(e){
         e.preventDefault()
         setError('')
-        try {
+
+        if(!email.trim() || !password.trim())return setError('Please fill in all fields.')
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if(!emailRegex.test(email))return setError('Please enter a valid email address.')
+        
+        if(password.length<6)return setError('Password must be at least 6 characters long.')
+
+        try { 
             await login(email,password)
             console.log('Logging in with:',email,' --',password)
             navigate('/')
